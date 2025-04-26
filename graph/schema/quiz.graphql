@@ -1,0 +1,16 @@
+type Quiz {
+    id: ID!
+    title: String!
+    results: [String!]!
+    questions: [Question!]!
+}
+
+input QuizInput {
+    title: String!
+    results: [String!]!
+}
+
+type QuizzesConnection {
+    items: [Quiz!]!
+    nextPageToken: String
+}

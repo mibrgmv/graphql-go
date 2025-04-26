@@ -1,11 +1,27 @@
 type User {
     id: ID!
-    name: String!
-    email: String!
-    todos: [Todo!]!
+    password: String!
+    username: String!
+    createdAt: String!
+    lastLogin: String!
 }
 
-input NewUser {
-    name: String!
-    email: String!
+type UsersConnection {
+    items: [User!]!
+    nextPageToken: String
+}
+
+type LoginResponse {
+    token: String!
+    userId: ID!
+    user: User
+}
+
+input AnswerInput {
+    questionId: ID!
+    selectedOption: String!
+}
+
+type EvaluationResult {
+    result: String!
 }

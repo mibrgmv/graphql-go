@@ -2,32 +2,77 @@
 
 package model
 
+type AnswerInput struct {
+	QuestionID     string `json:"questionId"`
+	SelectedOption string `json:"selectedOption"`
+}
+
+type EvaluationResult struct {
+	Result string `json:"result"`
+}
+
+type LoginResponse struct {
+	Token  string `json:"token"`
+	UserID string `json:"userId"`
+	User   *User  `json:"user,omitempty"`
+}
+
 type Mutation struct {
 }
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
+type OptionWeightInput struct {
+	Option  string    `json:"option"`
+	Weights []float64 `json:"weights"`
 }
 
-type NewUser struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
+type OptionWeights struct {
+	Option  string    `json:"option"`
+	Weights []float64 `json:"weights"`
 }
 
 type Query struct {
 }
 
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type Question struct {
+	ID      string   `json:"id"`
+	QuizID  string   `json:"quizId"`
+	Body    string   `json:"body"`
+	Options []string `json:"options"`
+	Quiz    *Quiz    `json:"quiz"`
+}
+
+type QuestionInput struct {
+	QuizID         string               `json:"quizId"`
+	Body           string               `json:"body"`
+	OptionsWeights []*OptionWeightInput `json:"optionsWeights"`
+}
+
+type Quiz struct {
+	ID        string      `json:"id"`
+	Title     string      `json:"title"`
+	Results   []string    `json:"results"`
+	Questions []*Question `json:"questions"`
+}
+
+type QuizInput struct {
+	Title   string   `json:"title"`
+	Results []string `json:"results"`
+}
+
+type QuizzesConnection struct {
+	Items         []*Quiz `json:"items"`
+	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
 type User struct {
-	ID    string  `json:"id"`
-	Name  string  `json:"name"`
-	Email string  `json:"email"`
-	Todos []*Todo `json:"todos"`
+	ID        string `json:"id"`
+	Password  string `json:"password"`
+	Username  string `json:"username"`
+	CreatedAt string `json:"createdAt"`
+	LastLogin string `json:"lastLogin"`
+}
+
+type UsersConnection struct {
+	Items         []*User `json:"items"`
+	NextPageToken *string `json:"nextPageToken,omitempty"`
 }

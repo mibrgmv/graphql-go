@@ -1,7 +1,12 @@
 type Mutation {
-    todoCreate(todo: NewTodo!): Todo!
-    todoComplete(id: Int!, updatedBy: Int!): Todo!
-    todoDelete(id: Int!, updatedBy: Int!): Todo!
+    createQuiz(input: QuizInput!): Quiz!
 
-    userCreate(user: NewUser!): User!
+    createQuestion(input: QuestionInput!): Question!
+
+    register(username: String!, password: String!): User!
+    login(username: String!, password: String!): LoginResponse!
+    deleteUser(userId: ID!): Boolean!
+    updateUser(username: String, password: String): User!
+
+    evaluateAnswers(quizId: ID!, answers: [AnswerInput!]!): EvaluationResult!
 }

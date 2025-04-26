@@ -1,0 +1,23 @@
+type Question {
+    id: ID!
+    quizId: ID!
+    body: String!
+    options: [String!]!
+    quiz: Quiz!
+}
+
+type OptionWeights {
+    option: String!
+    weights: [Float!]!
+}
+
+input QuestionInput {
+    quizId: ID!
+    body: String!
+    optionsWeights: [OptionWeightInput!]!
+}
+
+input OptionWeightInput {
+    option: String!
+    weights: [Float!]!
+}

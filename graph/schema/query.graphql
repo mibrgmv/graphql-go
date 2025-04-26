@@ -1,7 +1,9 @@
 type Query {
-    todo(id: ID!): Todo
-    todos(limit: Int, offset: Int): [Todo!]!
+    quiz(id: ID!): Quiz
+    quizzes(pageSize: Int, pageToken: String): QuizzesConnection
 
-    user(id: ID!): User
-    users(limit: Int, offset: Int): [User!]!
+    questionsByQuiz(quizId: ID!): [Question!]!
+
+    currentUser: User
+    users(pageSize: Int, pageToken: String): UsersConnection
 }

@@ -1,117 +1,152 @@
-## Create a User
+# 123
+
+```
+{
+  "Authorization": "c0072717-a887-45d9-9344-877cbeb3502b"
+}
+```
+
+# User
+
+## Register a User
 
 ```graphql
-mutation CreateUser {
-    userCreate(user: { name: "John Doe", email: "john@example.com" }) {
+mutation RegisterNewUser {
+    register(username: "newuser", password: "securepassword") {
         id
-        name
-        email
+        username
+        createdAt
     }
 }
 ```
 
-## Create a Todo for that User
+## Login
 
 ```graphql
-mutation CreateTodo {
-    todoCreate(todo: { text: "Learn GraphQL", userId: "U23" }) {
-        id
-        text
-        done
+mutation LoginExistingUser {
+    login(username: "newuser", password: "securepassword") {
+        token
         user {
             id
-            name
+            username
         }
     }
 }
 ```
 
-## Query a Todo with User details
+## Get Current User
 
 ```graphql
-query GetTodo {
-    todo(id: "T42") {
+query GetCurrentUser {
+    currentUser {
         id
-        text
-        done
-        user {
+        username
+        createdAt
+        lastLogin
+    }
+}
+```
+
+## Get Users
+
+```graphql
+query GetAllUsersWithPagination {
+    users(pageSize: 5) {
+        items {
             id
-            name
-            email
+            username
+            createdAt
+            lastLogin
         }
+        nextPageToken
     }
 }
 ```
 
-## Complete a Todo
+# Quiz
 
+## Create Quiz
 ```graphql
-mutation CompleteTodo {
-    todoComplete(id: 42, updatedBy: 23) {
-        id
-        text
-        done
-    }
+mutation CreateQuiz {
+  createQuiz(input: {
+    title: "Personality Test",
+    results: ["Introvert", "Extrovert", "Ambivert"]
+  }) {
+    id
+    title
+    results
+  }
 }
 ```
 
-## List all Todos
-
+## Get Quiz
 ```graphql
-query ListTodos {
-    todos(limit: 5, offset: 0) {
-        id
-        text
-        done
-        user {
-            name
-            email
-        }
+query GetQuiz {
+  quiz(id: "QUIZ_ID_FROM_CREATE_QUIZ") {
+    id
+    title
+    results
+    questions {
+      id
+      body
+      options
     }
+  }
 }
 ```
 
-## List all Users
-
+## Get Quizzes
 ```graphql
-query ListUsers {
-    users {
-        id
-        name
-        email
-        todos {
-            id
-            text
-            done
-        }
+query GetQuizzes {
+  quizzes(pageSize: 10) {
+    items {
+      id
+      title
+      results
     }
+    nextPageToken
+  }
 }
 ```
 
-## Delete a Todo (unimplemented)
+# Question
 
+## Create Question
 ```graphql
-mutation DeleteTodo {
-    todoDelete(id: 42, updatedBy: 23) {
-        id
-        text
-    }
+mutation CreateQuestion {
+  createQuestion(input: {
+    quizId: "QUIZ_ID_FROM_CREATE_QUIZ",
+    body: "Do you enjoy social gatherings?",
+    optionsWeights: [
+      {
+        option: "Yes, always",
+        weights: [0.2, 0.8, 0.5]
+      },
+      {
+        option: "Sometimes",
+        weights: [0.5, 0.5, 0.8]
+      },
+      {
+        option: "No, rarely",
+        weights: [0.8, 0.2, 0.3]
+      }
+    ]
+  }) {
+    id
+    body
+    options
+    quizId
+  }
 }
 ```
 
-## Query a User with their Todos
-
+## Get Question by Quiz
 ```graphql
-query GetUser {
-    user(id: "U23") {
-        id
-        name
-        email
-        todos {
-            id
-            text
-            done
-        }
-    }
+query GetQuestionsByQuiz {
+  questionsByQuiz(quizId: "QUIZ_ID_FROM_CREATE_QUIZ") {
+    id
+    body
+    options
+  }
 }
 ```
