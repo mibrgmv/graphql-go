@@ -54,7 +54,32 @@ func (r *mutationResolver) TodoComplete(ctx context.Context, id int32, updatedBy
 
 // TodoDelete is the resolver for the todoDelete field.
 func (r *mutationResolver) TodoDelete(ctx context.Context, id int32, updatedBy int32) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: TodoDelete - todoDelete"))
+	var todo *model.Todo
+	var index int
+	for i, t := range r.todos {
+		if fmt.Sprintf("%v", id) == t.ID {
+			todo = t
+			index = i
+			break
+		}
+	}
+	if todo == nil {
+		return nil, errors.New("todo not found")
+	}
+
+	userExists := false
+	for _, u := range r.users {
+		if fmt.Sprintf("%v", updatedBy) == u.ID {
+			userExists = true
+			break
+		}
+	}
+	if !userExists {
+		return nil, errors.New("user not found")
+	}
+
+	r.todos = append(r.todos[:index], r.todos[index+1:]...)
+	return todo, nil
 }
 
 // UserCreate is the resolver for the userCreate field.
