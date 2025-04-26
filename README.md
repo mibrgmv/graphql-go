@@ -1,4 +1,4 @@
-# 123
+# Authorization Headers
 
 ```
 {
@@ -11,7 +11,7 @@
 ## Register a User
 
 ```graphql
-mutation RegisterNewUser {
+mutation Register {
     register(username: "newuser", password: "securepassword") {
         id
         username
@@ -23,7 +23,7 @@ mutation RegisterNewUser {
 ## Login
 
 ```graphql
-mutation LoginExistingUser {
+mutation Login {
     login(username: "newuser", password: "securepassword") {
         token
         user {
@@ -50,7 +50,7 @@ query GetCurrentUser {
 ## Get Users
 
 ```graphql
-query GetAllUsersWithPagination {
+query GetUsers {
     users(pageSize: 5) {
         items {
             id
@@ -63,90 +63,115 @@ query GetAllUsersWithPagination {
 }
 ```
 
+## Update User
+
+```graphql
+mutation UpdateUser {
+    updateUser(username: "newname", password: "newpass") {
+        id
+        username
+        lastLogin
+    }
+}
+```
+
+## Delete User
+
+```graphql
+mutation DeleteUser {
+    deleteUser(userId: "USER_ID")
+}
+```
+
 # Quiz
 
 ## Create Quiz
+
 ```graphql
 mutation CreateQuiz {
-  createQuiz(input: {
-    title: "Personality Test",
-    results: ["Introvert", "Extrovert", "Ambivert"]
-  }) {
-    id
-    title
-    results
-  }
+    createQuiz(input: {
+        title: "Personality Test",
+        results: ["Introvert", "Extrovert", "Ambivert"]
+    }) {
+        id
+        title
+        results
+    }
 }
 ```
 
 ## Get Quiz
+
 ```graphql
 query GetQuiz {
-  quiz(id: "QUIZ_ID_FROM_CREATE_QUIZ") {
-    id
-    title
-    results
-    questions {
-      id
-      body
-      options
+    quiz(id: "QUIZ_ID_FROM_CREATE_QUIZ") {
+        id
+        title
+        results
+        questions {
+            id
+            body
+            options
+        }
     }
-  }
 }
 ```
 
 ## Get Quizzes
+
 ```graphql
 query GetQuizzes {
-  quizzes(pageSize: 10) {
-    items {
-      id
-      title
-      results
+    quizzes(pageSize: 10) {
+        items {
+            id
+            title
+            results
+        }
+        nextPageToken
     }
-    nextPageToken
-  }
 }
 ```
 
 # Question
 
 ## Create Question
+
 ```graphql
 mutation CreateQuestion {
-  createQuestion(input: {
-    quizId: "QUIZ_ID_FROM_CREATE_QUIZ",
-    body: "Do you enjoy social gatherings?",
-    optionsWeights: [
-      {
-        option: "Yes, always",
-        weights: [0.2, 0.8, 0.5]
-      },
-      {
-        option: "Sometimes",
-        weights: [0.5, 0.5, 0.8]
-      },
-      {
-        option: "No, rarely",
-        weights: [0.8, 0.2, 0.3]
-      }
-    ]
-  }) {
-    id
-    body
-    options
-    quizId
-  }
+    createQuestion(input: {
+        quizId: "QUIZ_ID_FROM_CREATE_QUIZ",
+        body: "Do you enjoy social gatherings?",
+        optionsWeights: [
+            {
+                option: "Yes, always",
+                weights: [0.2, 0.8, 0.5]
+            },
+            {
+                option: "Sometimes",
+                weights: [0.5, 0.5, 0.8]
+            },
+            {
+                option: "No, rarely",
+                weights: [0.8, 0.2, 0.3]
+            }
+        ]
+    }) {
+        id
+        body
+        options
+        quizId
+    }
 }
 ```
 
 ## Get Question by Quiz
+
 ```graphql
 query GetQuestionsByQuiz {
-  questionsByQuiz(quizId: "QUIZ_ID_FROM_CREATE_QUIZ") {
-    id
-    body
-    options
-  }
+    questionsByQuiz(quizId: "QUIZ_ID_FROM_CREATE_QUIZ") {
+        id
+        body
+        options
+    }
 }
 ```
