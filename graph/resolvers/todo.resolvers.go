@@ -1,4 +1,4 @@
-package graph
+package resolvers
 
 // This file will be automatically regenerated based on the schema, any resolver implementations
 // will be copied through when generating and any unknown code will be moved to the end.
@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"graphql-go/graph"
 	"graphql-go/graph/model"
 )
 
@@ -15,6 +16,6 @@ func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, 
 }
 
 // Todo returns TodoResolver implementation.
-func (r *Resolver) Todo() TodoResolver { return &todoResolver{r} }
+func (r *Resolver) Todo() graph.TodoResolver { return &todoResolver{r} }
 
 type todoResolver struct{ *Resolver }

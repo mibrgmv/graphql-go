@@ -1,4 +1,4 @@
-package graph
+package resolvers
 
 // This file will be automatically regenerated based on the schema, any resolver implementations
 // will be copied through when generating and any unknown code will be moved to the end.
@@ -7,6 +7,7 @@ package graph
 import (
 	"context"
 	"fmt"
+	"graphql-go/graph"
 	"graphql-go/graph/model"
 )
 
@@ -41,6 +42,6 @@ func (r *queryResolver) Users(ctx context.Context, limit *int32, offset *int32) 
 }
 
 // Query returns QueryResolver implementation.
-func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
+func (r *Resolver) Query() graph.QueryResolver { return &queryResolver{r} }
 
 type queryResolver struct{ *Resolver }
